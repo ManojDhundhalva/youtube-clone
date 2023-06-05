@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube</title>
+    <style>
+        p {
+            padding-left: 5px;
+            font-family: Arial, Helvetica, sans-serif;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        body {
+            margin: 0;
+            padding-top: 80px;
+            padding-left: 96px;
+            padding-right: 20px;
+            background-color: rgb(248, 248, 248);
+        }
+
+        .thumbnail {
+            /* height:300px;  */
+            /* object-fit: contain; */
+            /* object-fit: over; */
+            /* object-fit: cover; */
+            /* object-position: top  ; */
+            /* padding-top: 10px; */
+            width: 100%;
+            /* display: block; */
+        }
+
+        /* .Search-bar {
+            display: block;
+        } */
+
+        /* .video-preview {
+            width: 300px;
+            display: inline-block;
+            vertical-align: top;
+            margin-left: 5px;
+            margin-right: 15px;
+        } */
+
+        .video-info-grid {
+            display: grid;
+            grid-template-columns: 50px 1fr;
+        }
+
+        .profile-picture {
+            width: 50px;
+            height: 50px;
+
+            border-radius: 50px;
+            object-fit: cover;
+        }
+
+        .video-title {
+            margin-top: 1px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 20px;
+
+        }
+
+        .video-author,
+        .video-stats {
+            color: rgb(90, 96, 96);
+            font-size: 14px;
+        }
+
+        .video-author {
+            margin-bottom: 4px;
+        }
+
+        .thumbnail-row {
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            column-gap: 16px;
+            row-gap: 40px;
+        }
+
+        .left-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            /* width: 250px; */
+        }
+
+        .menu-button {
+            height: 22px;
+            margin-top: 0;
+            margin-bottom: 0;
+            margin-left: 26px;
+            margin-right: 24px;
+            cursor: pointer;
+            /* align-items: right; */
+        }
+
+        .youtube-logo {
+            width: 140px;
+            margin-top: 0;
+            margin-bottom: 0;
+            margin-left: 0;
+            margin-right: 5;
+            cursor: pointer;
+        }
+
+        .middle-section {
+            display: flex;
+            flex: 1;
+            margin-left: 70px;
+            margin-right: 35px;
+            align-items: center;
+            max-width: 600px;
+            display: flex;
+            align-items: center;
+        }
+
+        .right-section {
+            /* background-color: lightblue; */
+            margin-right: 22px;
+            width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+
+
+        .header {
+            display: flex;
+            height: 55px;
+            flex-direction: row;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-bottom-color: rgb(200, 200, 200);
+            z-index: 100;
+        }
+
+        .search-icon {
+            height: 26px;
+            width: 26px;
+        }
+
+        .search-button {
+            height: 41.5px;
+            width: 66px;
+            background-color: rgb(240, 240, 240);
+            border-style: solid;
+            border-width: 1px;
+            border-color: rgb(192, 192, 192);
+            margin-left: -1px;
+            box-shadow: inset 1px 2px 3px rgb(0, 0, 0, 0.05);
+            margin-right: 10px;
+        }
+
+        .voice-search-button {
+            height: 40px;
+            width: 40px;
+            border: none;
+            border-radius: 20px;
+            background-color: rgb(242, 242, 242);
+        }
+
+        .voice-search-icon {
+            height: 24px;
+            width: 24px;
+        }
+
+        .video-upload-icon {
+            height: 30px;
+            width: 30px;
+        }
+
+        .app-icon {
+            height: 23px;
+            width: 23px;
+        }
+
+        .bell-icon {
+            height: 24px;
+            width: 24px;
+        }
+
+        .youtube-channel-icon {
+            height: 40px;
+            border-radius: 20px;
+
+        }
+
+        .search-bar::placeholder {
+            font-family: Arial;
+            font-size: 16px;
+        }
+
+        .search-bar {
+            flex: 1;
+            height: 38px;
+            padding-left: 10px;
+            font-size: 16px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgb(192, 192, 192);
+            border-radius: 2px;
+            box-shadow: inset 1px 2px 3px rgb(0, 0, 0, 0.1);
+            width: 8px;
+            /*to remove bydefault width of search-bar*/
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            top: 55px;
+            background-color: white;
+            width: 72px;
+            z-index: 200;
+            /* padding-top: 5px; */
+        }
+
+        .video-time {
+            background-color: black;
+            color: white;
+            position: absolute;
+            bottom: 8px;
+            right: 5px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            padding-left: 4px;
+            padding-right: 4px;
+            padding-top: 4px;
+            padding-bottom: 4px;
+        }
+
+        .notification-icon-container {
+            position: relative;
+        }
+
+        .notification-count {
+            position: absolute;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            background-color: rgb(200, 0, 0);
+            color: white;
+            top: -3px;
+            right: -6px;
+            border-radius: 10px;
+            padding-top: 1.5px;
+            padding-bottom: 2px;
+            padding-left: 5.5px;
+            padding-right: 5.5px;
+        }
+
+        .sidebar-link {
+            height: 76px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .sidebar-link:hover {
+            background-color: rgb(235, 235, 235);
+        }
+
+        .sidebar img {
+            height: 30px;
+            margin-bottom: 4px;
+        }
+
+        .sidebar div {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 10px;
+            font-weight: bold;
+            flex-direction: column;
+        }
+
+        .search-button,
+        .voice-search-button,
+        .video-upload-icon-container,
+        .notification-icon-container,
+        .app-icon-container,
+        .youtube-channel-icon-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .search-button .tooltip,
+        .voice-search-button .tooltip,
+        .video-upload-icon-container .tooltip,
+        .notification-icon-container .tooltip,
+        .app-icon-container .tooltip,
+        .youtube-channel-icon-container .tooltip {
+            position: absolute;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            background-color: rgb(150, 150, 150);
+            padding-top: 4px;
+            padding-bottom: 4px;
+            padding-left: 8px;
+            padding-right: 8px;
+            color: white;
+            border-radius: 4px;
+            opacity: 0;
+            top: 40px;
+            transition: opacity 0.15s;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .search-button:hover .tooltip,
+        .voice-search-button:hover .tooltip,
+        .video-upload-icon-container:hover .tooltip,
+        .notification-icon-container:hover .tooltip,
+        .app-icon-container:hover .tooltip,
+        .youtube-channel-icon-container:hover .tooltip {
+            opacity: 1;
+        }
+
+        @media (max-width:300px) {
+            .video-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media (min-width:301px) and (max-width:800px) {
+            .video-grid {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+
+        @media (min-width:801px) and (min-width:999px) {
+            .video-grid {
+                grid-template-columns: 1fr 1fr 1fr
+            }
+        }
+
+        @media (min-width:1000px) {
+            .video-grid {
+                grid-template-columns: 1fr 1fr 1fr 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="left-section">
+            <img class="menu-button" src="image/menu-button.png">
+            <img class="youtube-logo" src="image/youtube-logo-png-46020.png">
+        </div>
+        <div class="middle-section">
+            <input class="search-bar" type="text" placeholder="Search">
+            <button class="search-button">
+                <img class="search-icon" src="image/icons8-search-50.png">
+                <div class="tooltip">
+                    Search
+                </div>
+            </button>
+            <button class="voice-search-button">
+                <img class="voice-search-icon" src="image/mic.png">
+                <div class="tooltip">
+                    Search with your voice
+                </div>
+            </button>
+        </div>
+        <div class="right-section">
+            <div class="video-upload-icon-container">
+                <img class="video-upload-icon" src="image/video-record.png">
+                <div class="tooltip">
+                    Create
+                </div>
+            </div>
+
+            <div class="app-icon-container">
+                <img class="app-icon" src="image/icons8-app-24.png">
+                <div class="tooltip">
+                    Apps
+                </div>
+            </div>
+
+            <div class="notification-icon-container">
+                <img class="bell-icon" src="image/icons8-bell-50.png">
+                <div class="tooltip">
+                    Notifications
+                </div>
+                <div class="notification-count">
+                    3
+                </div>
+
+            </div>
+            <div class="youtube-channel-icon-container">
+                <img class="youtube-channel-icon" src="image/leaf.jpg">
+                <div class="tooltip">
+                    Channel
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar">
+        <div class="sidebar-link">
+            <img src="image/icons8-home-48.png">
+            <div>
+                Home
+            </div>
+        </div>
+        <div class="sidebar-link">
+            <img src="image/compass.png">
+            <div>
+                Explore
+            </div>
+        </div>
+        <div class="sidebar-link">
+            <img src="image/youtube-subscription.png">
+            <div>
+                Subscription
+            </div>
+        </div>
+        <div class="sidebar-link">
+            <img src="image/icons8-youtube-50.png">
+            <div>
+                Originals
+            </div>
+        </div>
+        <div class="sidebar-link">
+            <img src="image/free-youtube-music-4560391-3789455.png">
+            <div>
+                Youtube Music
+            </div>
+        </div>
+        <div class="sidebar-link">
+            <img src="image/youtube-library.png">
+            <div>
+                Library
+            </div>
+        </div>
+    </div>
+    <div class="video-grid">
+        <div class="video-preview">
+            <div class="thumbnail-row">
+                <img class="thumbnail" src="image/lion.jpg">
+                <div class="video-time">
+                    14:20
+                </div>
+            </div>
+            <div class="video-info-grid">
+                <div class="channel-picture">
+                    <img class="profile-picture" src="image/forest.jpg">
+                </div>
+                <div class="video-info">
+
+                    <div>
+                        <p class="video-title">
+                            Lion fount at Jungle!
+                        </p>
+                    </div>
+                    <div>
+
+                        <p class="video-author">
+                            Marqaes Brownlee
+                        </p>
+                    </div>
+                    <div>
+                        <p class="video-stats">
+                            3.4M views <b>&#183</b> 6 month ago
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="video-preview">
+            <div class="thumbnail-row">
+                <img class="thumbnail" src="image/water.jpg">
+            </div>
+            <div class="video-info-grid">
+                <div class="channel-picture">
+                    <img class="profile-picture" src="image/tapu.jpg">
+                </div>
+
+                <div class="video-info">
+
+                    <div>
+                        <p class="video-title">
+                            Live longer (Jivan uska pani hein...)
+                        </p>
+                    </div>
+                    <div>
+
+                        <p class="video-author">
+                            Markplier
+                        </p>
+                    </div>
+                    <div>
+                        <p class="video-stats">
+                            19M views <b>&#183</b> 4 years ago
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="video-preview">
+            <div class="thumbnail-row">
+                <img class="thumbnail" src="image/forest.jpg">
+            </div>
+            <div class="video-info-grid">
+                <div class="channel-picture">
+                    <img class="profile-picture" src="image/leaf.jpg">
+                </div>
+                <div class="video-info">
+
+                    <div>
+                        <p class="video-title">
+                            Jungle Jungle...!
+                        </p>
+                    </div>
+                    <div>
+
+                        <p class="video-author">
+                            Marqaes Brownlee
+                        </p>
+                    </div>
+                    <div>
+                        <p class="video-stats">
+                            3.4M views <b>&#183</b> 6 month ago
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="video-preview">
+            <div class="thumbnail-row">
+                <img class="thumbnail" src="image/lion.jpg">
+            </div>
+            <div class="video-info-grid">
+                <div class="channel-picture">
+                    <img class="profile-picture" src="image/forest.jpg">
+                </div>
+                <div class="video-info">
+
+                    <div>
+                        <p class="video-title">
+                            Lion fount at Jungle!
+                        </p>
+                    </div>
+                    <div>
+
+                        <p class="video-author">
+                            Marqaes Brownlee
+                        </p>
+                    </div>
+                    <div>
+                        <p class="video-stats">
+                            3.4M views <b>&#183</b> 6 month ago
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="video-preview">
+            <div class="thumbnail-row">
+                <img class="thumbnail" src="image/water.jpg">
+            </div>
+            <div class="video-info-grid">
+                <div class="channel-picture">
+                    <img class="profile-picture" src="image/tapu.jpg">
+                </div>
+
+                <div class="video-info">
+
+                    <div>
+                        <p class="video-title">
+                            Live longer (Jivan uska pani hein...)
+                        </p>
+                    </div>
+                    <div>
+
+                        <p class="video-author">
+                            Markplier
+                        </p>
+                    </div>
+                    <div>
+                        <p class="video-stats">
+                            19M views <b>&#183</b> 4 years ago
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="video-preview">
+            <div class="thumbnail-row">
+                <img class="thumbnail" src="image/forest.jpg">
+            </div>
+            <div class="video-info-grid">
+                <div class="channel-picture">
+                    <img class="profile-picture" src="image/leaf.jpg">
+                </div>
+                <div class="video-info">
+
+                    <div>
+                        <p class="video-title">
+                            Jungle Jungle...!
+                        </p>
+                    </div>
+                    <div>
+
+                        <p class="video-author">
+                            Marqaes Brownlee
+                        </p>
+                    </div>
+                    <div>
+                        <p class="video-stats">
+                            3.4M views <b>&#183</b> 6 month ago
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
